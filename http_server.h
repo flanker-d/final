@@ -5,7 +5,6 @@
 #include "client_session.h"
 
 #include <fcntl.h>
-#include <sys/epoll.h>
 
 class http_server
 {

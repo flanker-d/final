@@ -12,6 +12,8 @@
 
 #include <thread>
 
+#include "http_parser.h"
+
 #define BUFFER_SIZE 1024
 
 class client_session : public std::enable_shared_from_this<client_session>
@@ -20,12 +22,13 @@ private:
   void client_response(int sock);
 
 public:
-  client_session(int sock);
+  client_session(int sock, server_params_t &params);
   ~client_session();
 
 private:
   int sock_;
-  std::thread session_;
+  std::thread thread_session_;
+  server_params_t &params_;
 };
 
 #endif // CLIENT_SESSION_H

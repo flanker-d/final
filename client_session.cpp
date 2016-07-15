@@ -2,7 +2,6 @@
 
 void client_session::client_response(int sock)
 {
-  //std::cout << "response " << sock << std::endl;
   char buffer[BUFFER_SIZE];
   bzero(buffer, BUFFER_SIZE);
   int rd = recv(sock, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
@@ -13,8 +12,12 @@ void client_session::client_response(int sock)
   }
   else if(rd > 0)
   {
-    send(sock, buffer, rd, MSG_NOSIGNAL);
-    std::cout << buffer << std::endl << "------------------------------------" << std::endl;
+    http_parser parser(params_);
+    std::string request(buffer);
+    parser.parse_http_request(request);
+    std::string response = parser.get_response();
+
+    send(sock, response.c_str(), response.length(), MSG_NOSIGNAL);
   }
   else
   {
@@ -24,15 +27,16 @@ void client_session::client_response(int sock)
   close(sock_);
 }
 
-client_session::client_session(int sock) :
+client_session::client_session(int sock, server_params_t &params) :
   sock_(sock),
-  session_(&client_session::client_response, this, sock)
+  thread_session_(&client_session::client_response, this, sock),
+  params_(params)
 {
   std::cout << "client connected" << std::endl;
 }
 
 client_session::~client_session()
 {
-  session_.join();
+  thread_session_.join();
   std::cout << "client disconnected" << std::endl;
 }
