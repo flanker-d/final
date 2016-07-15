@@ -6,6 +6,8 @@
 #include <cstdio>
 #include <cinttypes>
 
+#define MAX_EVENTS 4096
+
 typedef struct server_params_t
 {
   std::string host;

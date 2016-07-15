@@ -34,3 +34,8 @@ void args_parser::print_args()
 {
   std::cout << "ip: " << server_params_.host << " port: " << server_params_.port << " dir: " <<server_params_.directory << std::endl;
 }
+
+const server_params_t &args_parser::get_params() const
+{
+  return server_params_;
+}

@@ -10,6 +10,7 @@ public:
   args_parser();
   server_params_t parse_arguments(int argc, char *argv[]);
   void print_args();
+  const server_params_t &get_params() const;
 
 private:
   server_params_t server_params_;
