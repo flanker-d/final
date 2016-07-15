@@ -4,7 +4,6 @@
 #include "data_types.h"
 #include "client_session.h"
 
-
 #include <fcntl.h>
 #include <sys/epoll.h>
 
