@@ -41,7 +41,7 @@ http_server::http_server(server_params_t &params) : server_params_(params)
     if(slave_socket > 0)
     {
       std::shared_ptr<client_session> session(new client_session(slave_socket, server_params_));
-      std::cout << "next iteration" << std::endl;
+      //std::cout << "next iteration" << std::endl;
     }
   }
 }

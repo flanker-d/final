@@ -38,7 +38,7 @@ std::string http_parser::get_response()
   std::string full_path(params_.directory);
   full_path += request_params_.file;
 
-  std::cout << "full path: " << full_path << std::endl;
+  //std::cout << "full path: " << full_path << std::endl;
 
   std::ifstream read_input(full_path);
   if(read_input.is_open())
@@ -49,10 +49,10 @@ std::string http_parser::get_response()
     read_input.read(input_file.get(), size);
     read_input.close();
 
-    response_.append("HTTP/1.0 200 OK\r\n\r\n");
-    //response_.append("Content-Type: text/html\r\n");
-    //response_.append("Content-length:" + std::to_string(size) +"\r\n");
-    //response_.append("Connection: close\r\n\r\n");
+    response_.append("HTTP/1.0 200 OK\r\n");
+    response_.append("Content-Type: text/html\r\n");
+    response_.append("Content-length:" + std::to_string(size) +"\r\n");
+    response_.append("Connection: close\r\n\r\n");
     response_.append(input_file.get());
   }
   else
