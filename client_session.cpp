@@ -2,9 +2,9 @@
 
 void client_session::client_response()
 {
-  char buffer[BUFFER_SIZE];
-  bzero(buffer, BUFFER_SIZE);
-  int rd = recv(sock_, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
+  std::unique_ptr<char> buffer(new char[BUFFER_SIZE]);
+  bzero(buffer.get(), BUFFER_SIZE);
+  int rd = recv(sock_, buffer.get(), BUFFER_SIZE, MSG_NOSIGNAL);
   if((rd == 0) && (errno != EAGAIN))
   {
     shutdown(sock_, SHUT_RDWR);
@@ -12,10 +12,10 @@ void client_session::client_response()
   }
   else if(rd > 0)
   {
-    http_parser parser(params_);
-    std::string request(buffer);
-    parser.parse_http_request(request);
-    std::string response = parser.get_response();
+    std::unique_ptr<http_parser> parser(new http_parser(params_));
+    std::string request(buffer.get());
+    parser->parse_http_request(request);
+    std::string response = parser->get_response();
 
     send(sock_, response.c_str(), response.length(), MSG_NOSIGNAL);
   }

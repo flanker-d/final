@@ -4,10 +4,10 @@
 
 int main(int argc, char *argv[])
 {
-  daemonize daem;
-  args_parser parser;
-  server_params_t params = parser.parse_arguments(argc, argv);
+  std::unique_ptr<daemonize> daem(new daemonize);
+  std::unique_ptr<args_parser> parser(new args_parser);
+  server_params_t params = parser->parse_arguments(argc, argv);
   //server_params_t params = parser.get_params();
-  http_server server(params);
+  std::unique_ptr<http_server> server(new http_server(params));
   return 0;
 }
