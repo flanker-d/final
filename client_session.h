@@ -13,9 +13,6 @@
 #include <thread>
 
 #include "http_parser.h"
-#include "sessions_vector.h"
-
-class sessions_vector;
 
 #define BUFFER_SIZE 1024
 
@@ -25,14 +22,13 @@ private:
   void client_response();
 
 public:
-  client_session(int sock, server_params_t &params, sessions_vector &sess_vec);
+  client_session(int sock, server_params_t &params);
   ~client_session();
 
 private:
   int sock_;
   std::thread thread_session_;
   server_params_t &params_;
-  sessions_vector &sess_vect_;
 };
 
 #endif // CLIENT_SESSION_H

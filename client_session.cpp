@@ -27,23 +27,20 @@ void client_session::client_response()
   shutdown(sock_, SHUT_RDWR);
   close(sock_);
   std::cout << "end response" << std::endl;
-  auto this_sess = shared_from_this();
-  sess_vect_.erase_from_vector(this_sess);
 }
 
-client_session::client_session(int sock, server_params_t &params, sessions_vector &sess_vec) :
+client_session::client_session(int sock, server_params_t &params) :
   sock_(sock),
   thread_session_(&client_session::client_response, this),
-  params_(params),
-  sess_vect_(sess_vec)
+  params_(params)
 {
   std::cout << "client connected" << std::endl;
-  thread_session_.detach();
+  //thread_session_.detach();
 }
 
 client_session::~client_session()
 {
   std::cout << "try to join" << std::endl;
-  //thread_session_.join();
+  thread_session_.join();
   std::cout << "client disconnected" << std::endl;
 }

@@ -8,14 +8,12 @@ set(SOURCES_FILES
     http_server.cpp
     client_session.cpp
     http_parser.cpp
-    daemonize.cpp
-    sessions_vector.cpp)
+    daemonize.cpp)
 set(HEADERS_FILES
     data_types.h
     args_parser.h
     http_server.h
     client_session.h
     http_parser.h
-    daemonize.h
-    sessions_vector.h)
+    daemonize.h)
 add_executable(${PROJECT_NAME} ${SOURCES_FILES} ${HEADERS_FILES})

@@ -3,9 +3,9 @@
 
 #include "data_types.h"
 #include <vector>
-#include <regex>
 #include <fstream>
 #include <strings.h>
+#include <memory>
 
 class http_parser
 {

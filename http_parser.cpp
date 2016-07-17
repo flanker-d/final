@@ -17,20 +17,18 @@ http_parser::http_parser(server_params_t &params) : params_(params)
 
 request_params_t http_parser::parse_http_request(std::string &request)
 {
-  std::regex re_file("GET (\\/)?([\\w.\\/]+)?([\\?])?(.+)? HTTP");
-  std::smatch match_file;
-  if(std::regex_search(request, match_file, re_file))
+  int pos_end = request.find(" HTTP", 0);
+  if(pos_end != std::string::npos)
   {
-    std::cout << "Match: " << match_file[2] << std::endl;
-    request_params_.file = match_file[2];
-  }
-
-  std::regex re_mime("Accept: (.+\\/\\w+)?(,)");
-  std::smatch match_mime;
-  if(std::regex_search(request, match_mime, re_mime))
-  {
-    std::cout << "Match: " << match_mime[1] << std::endl;
-    request_params_.mime_type = match_mime[1];
+    std::string cut_request = request.substr(5, pos_end - 5);
+    int params_begin = cut_request.find('?', 0);
+    if(params_begin != std::string::npos)
+    {
+      std::string cut_req_without_params = cut_request.substr(0, params_begin);
+      request_params_.file = cut_req_without_params;
+    }
+    else
+      request_params_.file = cut_request;
   }
   return request_params_;
 }

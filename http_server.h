@@ -19,7 +19,6 @@ public:
 private:
   server_params_t server_params_;
   int master_socket_;
-  sessions_vector sessions_;
 };
 
 #endif // HTTP_SERVER_H
