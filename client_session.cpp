@@ -33,10 +33,11 @@ client_session::client_session(int sock, server_params_t &params) :
   params_(params)
 {
   std::cout << "client connected" << std::endl;
+  thread_session_.detach();
 }
 
 client_session::~client_session()
 {
-  thread_session_.join();
+  //thread_session_.join();
   std::cout << "client disconnected" << std::endl;
 }
