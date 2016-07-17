@@ -1,14 +1,14 @@
 #include "client_session.h"
 
-void client_session::client_response(int sock)
+void client_session::client_response()
 {
   char buffer[BUFFER_SIZE];
   bzero(buffer, BUFFER_SIZE);
-  int rd = recv(sock, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
+  int rd = recv(sock_, buffer, BUFFER_SIZE, MSG_NOSIGNAL);
   if((rd == 0) && (errno != EAGAIN))
   {
-    shutdown(sock, SHUT_RDWR);
-    close(sock);
+    shutdown(sock_, SHUT_RDWR);
+    close(sock_);
   }
   else if(rd > 0)
   {
@@ -17,7 +17,7 @@ void client_session::client_response(int sock)
     parser.parse_http_request(request);
     std::string response = parser.get_response();
 
-    send(sock, response.c_str(), response.length(), MSG_NOSIGNAL);
+    send(sock_, response.c_str(), response.length(), MSG_NOSIGNAL);
   }
   else
   {
@@ -29,7 +29,7 @@ void client_session::client_response(int sock)
 
 client_session::client_session(int sock, server_params_t &params) :
   sock_(sock),
-  thread_session_(&client_session::client_response, this, sock),
+  thread_session_(&client_session::client_response, this),
   params_(params)
 {
   std::cout << "client connected" << std::endl;

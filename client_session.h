@@ -19,7 +19,7 @@
 class client_session : public std::enable_shared_from_this<client_session>
 {
 private:
-  void client_response(int sock);
+  void client_response();
 
 public:
   client_session(int sock, server_params_t &params);

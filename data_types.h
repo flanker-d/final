@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cinttypes>
+#include <string>
 
 typedef struct server_params_t
 {
