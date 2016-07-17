@@ -2,6 +2,7 @@
 
 void client_session::client_response()
 {
+  std::cout << "begin response" << std::endl;
   std::unique_ptr<char> buffer(new char[BUFFER_SIZE]);
   bzero(buffer.get(), BUFFER_SIZE);
   int rd = recv(sock_, buffer.get(), BUFFER_SIZE, MSG_NOSIGNAL);
@@ -25,6 +26,7 @@ void client_session::client_response()
   }
   shutdown(sock_, SHUT_RDWR);
   close(sock_);
+  std::cout << "end response" << std::endl;
 }
 
 client_session::client_session(int sock, server_params_t &params) :
@@ -33,11 +35,12 @@ client_session::client_session(int sock, server_params_t &params) :
   params_(params)
 {
   std::cout << "client connected" << std::endl;
-  thread_session_.detach();
+  //thread_session_.detach();
 }
 
 client_session::~client_session()
 {
-  //thread_session_.join();
+  std::cout << "try to join" << std::endl;
+  thread_session_.join();
   std::cout << "client disconnected" << std::endl;
 }
