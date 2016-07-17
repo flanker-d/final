@@ -40,8 +40,11 @@ http_server::http_server(server_params_t &params) : server_params_(params)
     int slave_socket = accept(master_socket_, 0, 0);
     if(slave_socket > 0)
     {
-      std::shared_ptr<client_session> session(new client_session(slave_socket, server_params_));
+      std::shared_ptr<client_session> session(new client_session(slave_socket, server_params_, sessions_));
+      sessions_.add_to_vector(session);
       std::cout << "next iteration" << std::endl;
     }
   }
 }
+
+
