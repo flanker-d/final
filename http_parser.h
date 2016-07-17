@@ -5,6 +5,7 @@
 #include <vector>
 #include <regex>
 #include <fstream>
+#include <strings.h>
 
 class http_parser
 {
