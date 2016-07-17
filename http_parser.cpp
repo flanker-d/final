@@ -20,7 +20,7 @@ request_params_t http_parser::parse_http_request(std::string &request)
   int pos_end = request.find(" HTTP", 0);
   if(pos_end != std::string::npos)
   {
-    std::string cut_request = request.substr(4, pos_end - 5);
+    std::string cut_request = request.substr(4, pos_end - 4);
     int params_begin = cut_request.find('?', 0);
     if(params_begin != std::string::npos)
     {
